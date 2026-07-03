@@ -1,0 +1,117 @@
+/* ГОЛОВНИЙ КОНТЕЙНЕР (Вибудовує все в лінію) */
+.statsContainer {
+  display: flex;
+  align-items: center; /* Центрує елементи по вертикалі */
+  background-color: #28282D; /* Темний фон картки */
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #9E9EB1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  gap: 30px; /* Відстань між блоком чемпіона, KDA та статами */
+  margin-bottom: 8px; /* Відступ між картками ігор */
+}
+
+/* --- 1. БЛОК ЧЕМПІОНА --- */
+.championBlock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+
+.championIcon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover; /* Робить картинку ідеальним колом без розтягування */
+  display: block;    /* Прибирає приховані відступи браузера */
+  background-color: #28282D; /* Показує цей колір, поки картинка вантажиться */
+}
+
+.levelBadge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background-color: #202b33;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spellsAndRunes {
+  display: flex;
+  gap: 4px;
+}
+
+.spells, .runes {
+  display: flex;
+  flex-direction: column; /* Заклинання стоять одне над одним */
+  gap: 4px;
+}
+
+.spell, .rune {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  background-color: #1C1C1F;
+}
+
+.primaryRune {
+  border-radius: 50%; /* Робимо головну руну круглою */
+}
+
+/* --- 2. БЛОК KDA --- */
+.kdaBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px; /* Фіксована ширина, щоб статистика не "стрибала" */
+}
+
+.kdaNumbers {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.deaths {
+  color: #E84057; /* Червоний колір для смертей */
+}
+
+.kdaRatio {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* --- 3. РОЗДІЛЮВАЧ --- */
+.divider {
+  width: 1px;
+  height: 50px;
+  background-color: #3f3f46; /* Тонка лінія */
+}
+
+/* --- 4. ДОДАТКОВА СТАТИСТИКА --- */
+.extraStats {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+}
+
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

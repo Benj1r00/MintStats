@@ -1,0 +1,66 @@
+/* SearchBar.module.css */
+
+/* Контейнер: центруємо по горизонталі */
+.searchContainer {
+  display: flex;
+  position: relative;
+  width: 100%;
+  max-width: 450px; /* Оптимальна ширина для пошуку */
+  margin: 0 auto; /* Вирівнює контейнер по центру хедера */
+}
+
+/* Поле вводу */
+.searchInput {
+  width: 100%;
+  padding: 14px 50px 14px 20px; /* Правий відступ більший, щоб текст не залазив під кнопку */
+  border-radius: 30px; /* Робимо форму "таблетки" */
+  border: 1px solid #3f3f46;
+  background-color: #28282D;
+  color: #FFFFFF;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ефект при кліку на поле вводу */
+.searchInput:focus {
+  border-color: #00BBA3; /* Твій колір перемоги як акцент */
+  box-shadow: 0 0 0 3px rgba(0, 187, 163, 0.15);
+}
+
+/* Кнопка-стікер */
+.searchButton {
+  position: absolute; /* Відв'язуємо кнопку від загального потоку */
+  right: 6px; /* Відступ від правого краю інпуту */
+  top: 50%;
+  transform: translateY(-50%); /* Ідеальне центрування по вертикалі */
+  
+  width: 38px;
+  height: 38px;
+  border-radius: 50%; /* Робимо ідеальне коло */
+  border: none;
+  background-color: #00BBA3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Легка тінь для ефекту стікера */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Анімація при наведенні */
+.searchButton:hover {
+  background-color: #00a08c;
+  transform: translateY(-50%) scale(1.05); /* Кнопка трохи збільшується */
+}
+
+/* Стилі для самої SVG-лупи */
+.searchIcon {
+  width: 18px;
+  height: 18px;
+  stroke: #FFFFFF; /* Білий колір ліній */
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}

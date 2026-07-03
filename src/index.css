@@ -1,0 +1,37 @@
+/* Базові налаштування сторінки */
+body {
+  background-color: #1C1C1F; /* Темний фон */
+  color: #FFFFFF;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Стилі для хедера */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Розносить логотип і пошук по краях */
+  padding: 16px 40px;
+  background-color: #28282D;
+  border-bottom: 1px solid #3f3f46;
+}
+
+.logo-placeholder {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00BBA3; /* Акцентний колір */
+}
+
+/* Центральна колонка з контентом */
+.content-wrapper {
+  max-width: 800px; /* Обмежуємо ширину, щоб не розтягувалося на весь екран */
+  margin: 40px auto; /* Центруємо по горизонталі */
+  padding: 0 20px;
+}
+
+.placeholder-card {
+  background-color: #28282D;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
