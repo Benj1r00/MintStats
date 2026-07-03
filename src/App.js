@@ -1,68 +1,18 @@
-import React, { useState } from 'react';
-import SearchBar from './components/SearchBar/SearchBar';
-import MatchCard from './components/MatchCard/MatchCard';
-import useRiotApi from './hooks/useRiotApi';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage'; 
+import StatsPage from './pages/StatsPage'; 
+import ErrorPage from './pages/ErrorPage'
 
-function App() {
-  const { playerData, isLoading, error, fetchPlayerStats } = useRiotApi();
-  const [currentPlayer, setCurrentPlayer] = useState('');
-
-  const handlePlayerSearch = (inputValue) => {
-    const [name, tag] = inputValue.split('#');
-    if (name && tag) {
-      setCurrentPlayer(name);
-      fetchPlayerStats(name, tag);
-    } else {
-      alert("Помилка: Введіть Riot ID у правильному форматі, наприклад: Faker#KR1");
-    }
-  };
-
+export default function App() {
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <div className="logo-placeholder">MintStat</div>
-        <SearchBar onSearch={handlePlayerSearch} />
-      </header>
-
-      <div className="content-wrapper">
-        <main className="main-feed">
-          <section className="player-summary">
-            <h2>{currentPlayer ? `Останні ігри: ${currentPlayer}` : 'Пошук гравця'}</h2>
-          </section>
-
-          {isLoading && <p style={{color: '#00BBA3'}}>Завантаження даних...</p>}
-          {error && <p style={{color: '#E84057'}}>{error}</p>}
-          {!isLoading && !error && playerData && (
-            <section className="match-list">
-              {playerData.map((match) => (
-                <MatchCard 
-                  key={match.matchId}
-                  isWin={match.isWin}
-                  champion={match.champion}
-                  kills={match.kills}
-                  deaths={match.deaths}
-                  assists={match.assists}
-                  cripStat={match.cripStat}
-                  gameDurationSeconds={match.gameDurationSeconds} 
-                  spell1Name={match.spell1Name}
-                  spell2Name={match.spell2Name}
-                  primaryRuneId={match.primaryRuneId}
-                  secondaryStyleId={match.secondaryStyleId}
-                  item0={match.item0}
-                  item1={match.item1}
-                  item2={match.item2}
-                  item3={match.item3}
-                  item4={match.item4}
-                  item5={match.item5}
-                  trinket={match.trinket}
-                />
-              ))}
-            </section>
-          )}
-        </main>
-      </div>
+    <div className="app-layout">
+      <Routes>
+        <Route path="/" element={<HomePage />}>
+          <Route path="/:name/:tag" element={<StatsPage />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
     </div>
   );
 }
-
-export default App;

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 function useRiotApi() {
     const [playerData, setPlayerData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const fetchPlayerStats = async (playerName, playerTag, gameNum = 5) => {
+    const fetchPlayerStats = useCallback(async (playerName, playerTag, gameNum = 6) => {
         setIsLoading(true);
         setError(null);
 
@@ -100,7 +100,6 @@ function useRiotApi() {
                 };
             });
 
-            console.log("Відфільтровано всі матчі:", formattedMatches);
             setPlayerData(formattedMatches);
 
         } catch (error) {
@@ -109,7 +108,7 @@ function useRiotApi() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
 
     return { playerData, isLoading, error, fetchPlayerStats };
 }
