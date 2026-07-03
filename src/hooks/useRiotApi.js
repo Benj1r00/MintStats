@@ -10,7 +10,7 @@ function useRiotApi() {
         setError(null);
 
         try {
-            const RIOT_API_KEY = 'RGAPI-9bdd4722-b123-455c-929e-6768f0b0b5a2';
+            const RIOT_API_KEY = process.env.REACT_APP_RIOT_API_KEY;
             
             const SUM_INFO = `https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${playerName}/${playerTag}?api_key=${RIOT_API_KEY}`;
             const respons = await fetch(SUM_INFO);
