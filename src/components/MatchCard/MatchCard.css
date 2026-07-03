@@ -1,14 +1,13 @@
-/* ГОЛОВНИЙ КОНТЕЙНЕР (Вибудовує все в лінію) */
 .statsContainer {
   display: flex;
-  align-items: center; /* Центрує елементи по вертикалі */
-  background-color: #28282D; /* Темний фон картки */
+  align-items: center; 
+  background-color: #28282D; 
   padding: 12px 20px;
   border-radius: 8px;
   color: #9E9EB1;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  gap: 30px; /* Відстань між блоком чемпіона, KDA та статами */
-  margin-bottom: 8px; /* Відступ між картками ігор */
+  gap: 30px; 
+  margin-bottom: 8px; 
 }
 
 /* --- 1. БЛОК ЧЕМПІОНА --- */
@@ -28,9 +27,9 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  object-fit: cover; /* Робить картинку ідеальним колом без розтягування */
-  display: block;    /* Прибирає приховані відступи браузера */
-  background-color: #28282D; /* Показує цей колір, поки картинка вантажиться */
+  object-fit: cover; 
+  display: block;   
+  background-color: #28282D; 
 }
 
 .levelBadge {
@@ -56,7 +55,7 @@
 
 .spells, .runes {
   display: flex;
-  flex-direction: column; /* Заклинання стоять одне над одним */
+  flex-direction: column; 
   gap: 4px;
 }
 
@@ -68,15 +67,14 @@
 }
 
 .primaryRune {
-  border-radius: 50%; /* Робимо головну руну круглою */
+  border-radius: 50%; 
 }
 
-/* --- 2. БЛОК KDA --- */
 .kdaBlock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 100px; /* Фіксована ширина, щоб статистика не "стрибала" */
+  min-width: 100px; 
 }
 
 .kdaNumbers {
@@ -87,7 +85,7 @@
 }
 
 .deaths {
-  color: #E84057; /* Червоний колір для смертей */
+  color: #E84057; 
 }
 
 .kdaRatio {
@@ -95,14 +93,12 @@
   margin-top: 4px;
 }
 
-/* --- 3. РОЗДІЛЮВАЧ --- */
 .divider {
   width: 1px;
   height: 50px;
-  background-color: #3f3f46; /* Тонка лінія */
+  background-color: #3f3f46;
 }
 
-/* --- 4. ДОДАТКОВА СТАТИСТИКА --- */
 .extraStats {
   display: flex;
   flex-direction: column;
@@ -116,51 +112,43 @@
   gap: 6px;
 }
 
-/* === БЛОК ПРЕДМЕТІВ === */
-
-/* Головний контейнер: тримає сітку предметів і тотем поруч */
 .items-block {
   display: flex;
   align-items: center;
-  gap: 6px; /* Відстань між основними предметами та тотемом */
+  gap: 6px;
 }
 
-/* Робимо сітку 3x2 для 6 основних слотів */
 .main-items-grid {
   display: grid;
-  grid-template-columns: repeat(3, 24px); /* 3 колонки по 24px */
-  grid-template-rows: repeat(2, 24px);    /* 2 ряди по 24px */
-  gap: 2px; /* Маленька відстань між самими предметами */
+  grid-template-columns: repeat(3, 24px);
+  grid-template-rows: repeat(2, 24px);   
+  gap: 2px; 
 }
 
-/* Стиль для самої картинки предмета */
 .item-icon {
   width: 24px;
   height: 24px;
-  border-radius: 4px; /* Легке заокруглення, як у грі */
-  object-fit: cover;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Додає трохи глибини */
-}
-
-/* Стиль для порожнього слота (напівпрозорий темний квадрат) */
-.empty-slot {
-  width: 24px;
-  height: 24px;
   border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.4); /* Темний фон */
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Дуже слабка світла рамка */
-}
-
-/* Стиль для тотема (item6) */
-.trinket-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%; /* Тотеми в LoL традиційно виділяють кругом! */
   object-fit: cover;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* Якщо тотема немає, порожній слот теж має бути круглим */
+.empty-slot {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.4); 
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trinket-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
 .trinket-empty {
   width: 24px;
   height: 24px;

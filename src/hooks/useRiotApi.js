@@ -29,7 +29,6 @@ function useRiotApi() {
                 return fetch(GET_MATCH_INFO).then(res => res.json());
             });
 
-            // Чекаємо, поки завантажаться ВСІ матчі з масиву
             const allMatchesData = await Promise.all(matchPromises);
 
             // Словники даних

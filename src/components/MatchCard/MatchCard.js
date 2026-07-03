@@ -1,5 +1,5 @@
 import React from 'react';
-import './MatchCard.css'; // Звичайний імпорт стилів
+import './MatchCard.css'; 
 
 function MatchCard({ isWin=false, champion='Akali', kills=11, deaths=8, assists=10, 
                      championLevel=9, cripStat=418, gameTime=39.29, 
@@ -45,10 +45,8 @@ function MatchCard({ isWin=false, champion='Akali', kills=11, deaths=8, assists=
             </div>
         </div>
 
-        {/* 3. Вертикальний розділювач */}
         <div className="divider"></div>
 
-        {/* 4. Блок додаткової статистики */}
         <div className="extraStats">
             <div className="statRow">
             CS {cripStat} ({+(cripStat/gameTime).toFixed(1)})
