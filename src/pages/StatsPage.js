@@ -1,17 +1,24 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MatchCard from '../components/MatchCard/MatchCard';
 import useRiotApi from '../hooks/useRiotApi';
 
 export default function StatsPage() {
     const { name, tag } = useParams();
-    const { playerData, isLoading, error, fetchPlayerStats } = useRiotApi();
+    const { playerData, gameVersion, isLoading, error, fetchPlayerStats } = useRiotApi();
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         if (name && tag) {
             fetchPlayerStats(name, tag);
         }
     }, [name, tag, fetchPlayerStats]);
+
+    const handleMatchClick = (matchId, fullGameDetails, gameversion) => {
+        navigate(`/match/${matchId}`, {
+            state: { details: fullGameDetails, gameversion }
+        });
+    };
 
     return(
         <div className="content-wrapper">
@@ -23,13 +30,16 @@ export default function StatsPage() {
                         {playerData.map((match) => (
                             <MatchCard 
                             key={match.matchId}
+                            onClick={() =>handleMatchClick(match.matchId, match.fullGameDetails, gameVersion)}
+                            version={gameVersion}
                             isWin={match.isWin}
                             champion={match.champion}
                             kills={match.kills}
                             deaths={match.deaths}
                             assists={match.assists}
                             cripStat={match.cripStat}
-                            gameDurationSeconds={match.gameDurationSeconds} 
+                            championLevel={match.championLevel}
+                            gameDurationSeconds={match.gameTime} 
                             spell1Name={match.spell1Name}
                             spell2Name={match.spell2Name}
                             primaryRuneId={match.primaryRuneId}
@@ -41,6 +51,9 @@ export default function StatsPage() {
                             item4={match.item4}
                             item5={match.item5}
                             trinket={match.trinket}
+                            flippedcss={false}
+                            name={""}
+                            tag={""}
                             />
                         ))}
                     </section>

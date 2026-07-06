@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 
 function useRiotApi() {
     const [playerData, setPlayerData] = useState(null);
+    const [gameVersion, setGameVersion] = useState("16.11.1");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -10,6 +11,12 @@ function useRiotApi() {
         setError(null);
 
         try {
+            const versionRes = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
+            const versions = await versionRes.json();
+            const latestVersion = versions[0];
+            setGameVersion(latestVersion);
+            console.log(latestVersion);
+
             const RIOT_API_KEY = process.env.REACT_APP_RIOT_API_KEY;
             
             const SUM_INFO = `https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${playerName}/${playerTag}?api_key=${RIOT_API_KEY}`;
@@ -75,6 +82,9 @@ function useRiotApi() {
             const formattedMatches = allMatchesData.map(matchData => {
                 const playerStats = matchData.info.participants.find(participant => participant.puuid === playerPuuid);
                 
+                const team100 = matchData.info.participants.filter(p => p.teamId === 100);
+                const team200 = matchData.info.participants.filter(p => p.teamId === 200);
+
                 return {
                     matchId: matchData.metadata.matchId, 
                     champion: playerStats.championName,
@@ -83,6 +93,7 @@ function useRiotApi() {
                     assists: playerStats.assists,
                     damage: playerStats.totalDamageDealtToChampions,
                     isWin: playerStats.win,
+                    championLevel: playerStats.champLevel,
                     gameMode: matchData.info.gameMode,
                     cripStat: playerStats.totalMinionsKilled + playerStats.neutralMinionsKilled,
                     gameTime: +(`${Math.floor(playerStats.timePlayed / 60)}.${playerStats.timePlayed % 60}`),
@@ -96,10 +107,19 @@ function useRiotApi() {
                     item3: playerStats.item3,
                     item4: playerStats.item4,
                     item5: playerStats.item5,
-                    trinket: playerStats.item6
+                    trinket: playerStats.item6,
+
+                    fullGameDetails: {
+                        gameDurationSeconds: matchData.info.gameDuration,
+                        team100: team100,
+                        team200: team200,
+                        teamsStats: matchData.info.teams,
+                        rawParticipants: matchData.info.participants
+                    }
                 };
             });
 
+            console.log(formattedMatches);
             setPlayerData(formattedMatches);
 
         } catch (error) {
@@ -110,7 +130,7 @@ function useRiotApi() {
         }
     }, []);
 
-    return { playerData, isLoading, error, fetchPlayerStats };
+    return { playerData, gameVersion, isLoading, error, fetchPlayerStats };
 }
 
 export default useRiotApi;

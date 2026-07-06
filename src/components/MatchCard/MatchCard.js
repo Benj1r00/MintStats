@@ -1,21 +1,24 @@
 import React from 'react';
 import './MatchCard.css'; 
 
-function MatchCard({ isWin=false, champion='Akali', kills=11, deaths=8, assists=10, 
-                     championLevel=9, cripStat=418, gameTime=39.29, 
-                     spell1Name='SummonerFlash', spell2Name='SummonerDot',
-                     primaryRuneId='104px-Press_the_Attack_rune', secondaryStyleId='Precision_icon',
-                     item0, item1, item2, item3, item4, item5, trinket,}) {
+function MatchCard({ isWin=false, champion, kills, deaths, assists, 
+                     championLevel, cripStat, gameDurationSeconds, 
+                     spell1Name, spell2Name,
+                     primaryRuneId, secondaryStyleId,
+                     item0, item1, item2, item3, item4, item5, trinket,
+                     onClick, flippedcss, version, name, tag}) {
 
-    const pathToChampionImg = `/assets/tiles/${champion}_0.jpg`;
+    const pathToChampionImg = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champion}.png`;
     const pathToMainRunIdImg = `/assets/primaryRuneId/${primaryRuneId}.webp`;
     const pathTosecondaryRunIdImg = `/assets/secondaryStyleId/${secondaryStyleId}.webp`;
-    const spell1ImageUrl = `https://ddragon.leagueoflegends.com/cdn/14.11.1/img/spell/${spell1Name}.png`;
-    const spell2ImageUrl = `https://ddragon.leagueoflegends.com/cdn/14.11.1/img/spell/${spell2Name}.png`;
-    const ItemUrl = (item) => `https://ddragon.leagueoflegends.com/cdn/14.11.1/img/item/${item}.png`
+    const spell1ImageUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell1Name}.png`;
+    const spell2ImageUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell2Name}.png`;
+    const ItemUrl = (item) => `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`
     
     return (
-        <div className="statsContainer" style={{ backgroundColor: isWin ? '#1A1D3C' : '#301A24' }}>
+        <div className={`statsContainer ${flippedcss ? 'flipped' : ''}`} 
+        style={{ backgroundColor: isWin ? '#1A1D3C' : '#301A24' }} 
+        onClick={onClick}>
         
         <div className="championBlock">
             <div className="avatarWrapper">
@@ -38,18 +41,17 @@ function MatchCard({ isWin=false, champion='Akali', kills=11, deaths=8, assists=
         {/* 2. Блок KDA */}
         <div className="kdaBlock">
             <div className="kdaNumbers">
-            {kills} / <span className="deaths">{deaths}</span> / {assists}
+                {kills} / <span className="deaths">{deaths}</span> / {assists}
             </div>
             <div className="kdaRatio">
-            {+((kills+assists)/deaths).toFixed(2)}:1 KDA
+                {+((kills+assists)/deaths).toFixed(2)}:1 KDA
             </div>
         </div>
 
-        <div className="divider"></div>
-
         <div className="extraStats">
-            <div className="statRow">
-            CS {cripStat} ({+(cripStat/gameTime).toFixed(1)})
+            {name && tag ? `${name}#${tag}` : name || " "}
+            <div className="statRow"> 
+                CS {cripStat} ({+(cripStat/gameDurationSeconds).toFixed(1)})
             </div>
         </div>
         <div className='items-block'>

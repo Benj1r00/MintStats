@@ -1,6 +1,7 @@
 .statsContainer {
   display: flex;
   align-items: center; 
+  justify-content: space-between;
   background-color: #28282D; 
   padding: 12px 20px;
   border-radius: 8px;
@@ -10,7 +11,6 @@
   margin-bottom: 8px; 
 }
 
-/* --- 1. БЛОК ЧЕМПІОНА --- */
 .championBlock {
   display: flex;
   align-items: center;
@@ -155,4 +155,22 @@
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.statsContainer.flipped {
+  flex-direction: row-reverse;
+}
+
+.statsContainer.flipped .championBlock {
+  flex-direction: row-reverse;
+}
+
+.statsContainer.flipped .items-block {
+  flex-direction: row-reverse;
+}
+
+.statsContainer.flipped .playerInfoBlock,
+.statsContainer.flipped .statsBlock {
+  text-align: right;
+  align-items: flex-end;
 }

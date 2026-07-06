@@ -19,11 +19,11 @@ export default function HomePage() {
   return (
     <div className="app-container">
       <header className="top-header">
-        <div className="logo">MintStat</div>
+        <div className="logo">MintStat🍃</div>
         
         <div className="header-search">
           <SearchBar onSearch={handlePlayerSearch} />
-        </div>
+        </div>    
 
         <div className="header-spacer"></div> 
       </header>
