@@ -25,7 +25,7 @@ MintStat — це клієнтський веб-застосунок, створ
 
 1. **Склонуйте репозиторій та встановіть залежності:**
    ```bash
-   git clone [https://github.com/ВашЮзернейм/MintStat.git](https://github.com/ВашЮзернейм/MintStat.git)
+   git clone https://github.com/Benj1r00/MintStat
    cd MintStat
    npm install
 
