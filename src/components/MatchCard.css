@@ -1,0 +1,178 @@
+.statsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #28282d;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: #9e9eb1;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    gap: 30px;
+    margin-bottom: 8px;
+}
+
+.championBlock {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatarWrapper {
+    position: relative;
+    width: 56px;
+    height: 56px;
+}
+
+.championIcon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background-color: #28282d;
+}
+
+.levelBadge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background-color: #202b33;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: bold;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spellsAndRunes {
+    display: flex;
+    gap: 4px;
+}
+
+.spells,
+.runes {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.spell,
+.rune {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    background-color: #1c1c1f;
+}
+
+.primaryRune {
+    border-radius: 50%;
+}
+
+.kdaBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+}
+
+.kdaNumbers {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.deaths {
+    color: #e84057;
+}
+
+.kdaRatio {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.divider {
+    width: 1px;
+    height: 50px;
+    background-color: #3f3f46;
+}
+
+.extraStats {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 13px;
+}
+
+.statRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.items-block {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.main-items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 24px);
+    grid-template-rows: repeat(2, 24px);
+    gap: 2px;
+}
+
+.item-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.empty-slot {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trinket-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.trinket-empty {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.statsContainer.flipped {
+    flex-direction: row-reverse;
+}
+
+.statsContainer.flipped .championBlock {
+    flex-direction: row-reverse;
+}
+
+.statsContainer.flipped .items-block {
+    flex-direction: row-reverse;
+}
+
+.statsContainer.flipped .playerInfoBlock,
+.statsContainer.flipped .statsBlock {
+    text-align: right;
+    align-items: flex-end;
+}
