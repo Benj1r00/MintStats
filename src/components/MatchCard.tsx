@@ -53,7 +53,6 @@ const MatchCard: React.FC<MatchCardProps> = ({
 
     const kdaRatio = deaths === 0 ? 'Perfect' : ((kills + assists) / deaths).toFixed(2);
 
-    // Ділимо секунди на 60, щоб отримати хвилини для правильного CS/Min
     const durationMinutes = gameDurationSeconds / 60;
     const csPerMin = durationMinutes > 0 ? (cripStat / durationMinutes).toFixed(1) : '0.0';
 

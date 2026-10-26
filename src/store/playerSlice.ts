@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FetchPlayerStatsData } from '@/hooks/useRiotApi';
+import { FetchPlayerStatsData, FetchPlayerProfileData } from '@/hooks/useRiotApi';
 
 export interface PlayerState {
     matches: FetchPlayerStatsData[];
+    profile: FetchPlayerProfileData | null;
     currentPlayer: {
         name: string;
         tag: string;
@@ -11,6 +12,7 @@ export interface PlayerState {
 
 const initialState: PlayerState = {
     matches: [],
+    profile: null,
     currentPlayer: null,
 };
 
@@ -22,16 +24,21 @@ const playerSlice = createSlice({
             state.matches = action.payload;
         },
 
+        setProfile(state, action: PayloadAction<FetchPlayerProfileData>) {
+            state.profile = action.payload;
+        },
+
         setCurrentPlayer: (state, action: PayloadAction<{ name: string; tag: string }>) => {
             state.currentPlayer = action.payload;
         },
 
         clearPlayerData: (state) => {
             state.matches = [];
+            state.profile = null;
             state.currentPlayer = null;
         },
     },
 });
 
-export const { setMatches, setCurrentPlayer, clearPlayerData } = playerSlice.actions;
+export const { setMatches, setProfile, setCurrentPlayer, clearPlayerData } = playerSlice.actions;
 export default playerSlice.reducer;

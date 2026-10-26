@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { SUMMONER_SPELLS, SECONDARY_STYLES, PRIMARY_RUNES } from '@/constants/riotData';
-import { setMatches } from '@/store/playerSlice';
+import { setMatches, setProfile } from '@/store/playerSlice';
 
 export interface FetchPlayerStatsData {
     matchId: string;
@@ -35,10 +35,38 @@ export interface FetchPlayerStatsData {
     };
 }
 
+export interface FetchPlayerProfileData {
+    ProfileSumInfo: {
+        Proflevl: number;
+        ProfIcon: number;
+        Ranked: {
+            RANKED_FLEX: {
+                tier: string;
+                rank: string;
+                leaguePoints: number;
+                wins: number;
+                losses: number;
+                inactive: boolean;
+                hotStreak: boolean;
+            };
+            RANKED_SOLO_5x5: {
+                tier: string;
+                rank: string;
+                leaguePoints: number;
+                wins: number;
+                losses: number;
+                inactive: boolean;
+                hotStreak: boolean;
+            };
+        };
+    };
+}
+
 function useRiotApi() {
     const dispatch = useDispatch();
 
     const [playerData, setPlayerData] = useState<FetchPlayerStatsData[] | null>(null);
+    const [playerProfileData, setplayerProfileData] = useState<FetchPlayerProfileData | null>(null);
     const [gameVersion, setGameVersion] = useState('16.11.1');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -63,6 +91,15 @@ function useRiotApi() {
                 if (!respons.ok) throw new Error('Гравця з таким Riot ID не знайдено');
                 const data = await respons.json();
                 const playerPuuid = data.puuid;
+                console.log(playerPuuid);
+
+                const SummonerDTO = `https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${playerPuuid}?api_key=${RIOT_API_KEY}`;
+                const SummonerDTOdata = await fetch(SummonerDTO);
+                const ProfileIconLevel = await SummonerDTOdata.json();
+
+                const RankedInfoUrl = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-puuid/${playerPuuid}?api_key=${RIOT_API_KEY}`;
+                const RankedInfoData = await fetch(RankedInfoUrl);
+                const RankedInfourl = await RankedInfoData.json();
 
                 const MATCH_HISTORIS_IDS = `https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/${playerPuuid}/ids?start=0&count=${gameNum}&api_key=${RIOT_API_KEY}`;
                 const matchHistorisRespons = await fetch(MATCH_HISTORIS_IDS);
@@ -77,6 +114,45 @@ function useRiotApi() {
                 });
 
                 const allMatchesData = await Promise.all(matchPromises);
+
+                const playerProfile: FetchPlayerProfileData = {
+                    ProfileSumInfo: {
+                        Proflevl: ProfileIconLevel.summonerLevel,
+                        ProfIcon: ProfileIconLevel.profileIconId,
+                        Ranked: {
+                            RANKED_FLEX: (() => {
+                                const flex = RankedInfourl.find(
+                                    (q: any) => q.queueType === 'RANKED_FLEX_SR'
+                                );
+                                return {
+                                    tier: flex?.tier || 'UNRANKED',
+                                    rank: flex?.rank || '',
+                                    leaguePoints: flex?.leaguePoints || 0,
+                                    wins: flex?.wins || 0,
+                                    losses: flex?.losses || 0,
+                                    inactive: flex?.inactive || false,
+                                    hotStreak: flex?.hotStreak || false,
+                                };
+                            })(),
+                            RANKED_SOLO_5x5: (() => {
+                                const solo = RankedInfourl.find(
+                                    (q: any) => q.queueType === 'RANKED_SOLO_5x5'
+                                );
+                                return {
+                                    tier: solo?.tier || 'UNRANKED',
+                                    rank: solo?.rank || '',
+                                    leaguePoints: solo?.leaguePoints || 0,
+                                    wins: solo?.wins || 0,
+                                    losses: solo?.losses || 0,
+                                    inactive: solo?.inactive || false,
+                                    hotStreak: solo?.hotStreak || false,
+                                };
+                            })(),
+                        },
+                    },
+                };
+
+                setplayerProfileData(playerProfile);
 
                 const formattedMatches: FetchPlayerStatsData[] = allMatchesData.map((matchData) => {
                     const playerStats = matchData.info.participants.find(
@@ -130,6 +206,7 @@ function useRiotApi() {
 
                 setPlayerData(formattedMatches);
 
+                dispatch(setProfile(playerProfile));
                 dispatch(setMatches(formattedMatches));
             } catch (error: any) {
                 setError(error.message || 'Не вдалося отримати статистику гравця');
@@ -141,7 +218,7 @@ function useRiotApi() {
         [dispatch]
     );
 
-    return { playerData, gameVersion, isLoading, error, fetchPlayerStats };
+    return { playerData, playerProfileData, gameVersion, isLoading, error, fetchPlayerStats };
 }
 
 export default useRiotApi;
