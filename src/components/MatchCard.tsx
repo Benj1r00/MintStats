@@ -1,5 +1,6 @@
 import React from 'react';
 import { FetchPlayerStatsData } from '@/hooks/useRiotApi';
+import { useRunes } from '@/hooks/useRunes';
 import './MatchCard.css';
 
 interface MatchCardProps {
@@ -11,14 +12,7 @@ interface MatchCardProps {
     onClick?: () => void;
 }
 
-const MatchCard: React.FC<MatchCardProps> = ({
-    match,
-    version,
-    name,
-    tag,
-    isFlipped = false,
-    onClick,
-}) => {
+const MatchCard: React.FC<MatchCardProps> = ({ match, version, name, tag, isFlipped = false, onClick }) => {
     const {
         isWin,
         champion,
@@ -42,14 +36,17 @@ const MatchCard: React.FC<MatchCardProps> = ({
     } = match;
 
     const championId = champion.toLowerCase() === 'fiddlesticks' ? 'Fiddlesticks' : champion;
+    const runes = useRunes(version);
+
+    const primaryPath = runes[primaryRuneId];
+    const secondaryPath = runes[secondaryStyleId];
     const pathToChampionImg = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${championId}.png`;
-    const pathToMainRunIdImg = `/assets/primaryRuneId/${primaryRuneId}.webp`;
-    const pathTosecondaryRunIdImg = `/assets/secondaryStyleId/${secondaryStyleId}.webp`;
+    const pathToMainRunIdImg = primaryPath ? `https://ddragon.leagueoflegends.com/cdn/img/${primaryPath}` : '';
+    const pathTosecondaryRunIdImg = secondaryPath ? `https://ddragon.leagueoflegends.com/cdn/img/${secondaryPath}` : '';
     const spell1ImageUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell1Name}.png`;
     const spell2ImageUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell2Name}.png`;
 
-    const getItemUrl = (itemId: number) =>
-        `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
+    const getItemUrl = (itemId: number) => `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
 
     const kdaRatio = deaths === 0 ? 'Perfect' : ((kills + assists) / deaths).toFixed(2);
 
@@ -76,11 +73,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
                         <img className="spell" src={spell2ImageUrl} alt={spell2Name} />
                     </div>
                     <div className="runes">
-                        <img
-                            className="rune primaryRune"
-                            src={pathToMainRunIdImg}
-                            alt="Primary Rune"
-                        />
+                        <img className="rune primaryRune" src={pathToMainRunIdImg} alt="Primary Rune" />
                         <img className="rune" src={pathTosecondaryRunIdImg} alt="Secondary Rune" />
                     </div>
                 </div>
@@ -90,9 +83,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
                 <div className="kdaNumbers">
                     {kills} / <span className="deaths">{deaths}</span> / {assists}
                 </div>
-                <div className="kdaRatio">
-                    {kdaRatio === 'Perfect' ? 'Perfect KDA' : `${kdaRatio}:1 KDA`}
-                </div>
+                <div className="kdaRatio">{kdaRatio === 'Perfect' ? 'Perfect KDA' : `${kdaRatio}:1 KDA`}</div>
             </div>
 
             <div className="extraStats">
@@ -107,12 +98,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
                     {/* Перебираємо масив предметів через map */}
                     {items.map((itemId, index) =>
                         itemId ? (
-                            <img
-                                key={index}
-                                className="item-icon"
-                                src={getItemUrl(itemId)}
-                                alt={`Item ${index}`}
-                            />
+                            <img key={index} className="item-icon" src={getItemUrl(itemId)} alt={`Item ${index}`} />
                         ) : (
                             <div key={index} className="empty-slot"></div>
                         )

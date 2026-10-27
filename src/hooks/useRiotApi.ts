@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { SUMMONER_SPELLS, SECONDARY_STYLES, PRIMARY_RUNES } from '@/constants/riotData';
+import { SUMMONER_SPELLS } from '@/constants/riotData';
 import { setMatches, setProfile } from '@/store/playerSlice';
 
 export interface FetchPlayerStatsData {
@@ -17,8 +17,8 @@ export interface FetchPlayerStatsData {
     gameTime: number;
     spell1Name: string;
     spell2Name: string;
-    primaryRuneId: string;
-    secondaryStyleId: string;
+    primaryRuneId: number;
+    secondaryStyleId: number;
     item0: number;
     item1: number;
     item2: number;
@@ -181,11 +181,8 @@ function useRiotApi() {
                             +`${Math.floor(playerStats.timePlayed / 60)}.${playerStats.timePlayed % 60}`,
                         spell1Name: SUMMONER_SPELLS[playerStats.summoner1Id] || 'SummonerFlash',
                         spell2Name: SUMMONER_SPELLS[playerStats.summoner2Id] || 'SummonerDot',
-                        primaryRuneId:
-                            PRIMARY_RUNES[playerStats.perks.styles[0].selections[0].perk] ||
-                            '104px-Conqueror_rune',
-                        secondaryStyleId:
-                            SECONDARY_STYLES[playerStats.perks.styles[1].style] || 'Precision_icon',
+                        primaryRuneId: playerStats.perks.styles[0].selections[0].perk,
+                        secondaryStyleId: playerStats.perks.styles[1].style,
                         item0: playerStats.item0,
                         item1: playerStats.item1,
                         item2: playerStats.item2,
